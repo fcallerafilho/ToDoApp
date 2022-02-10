@@ -10,13 +10,14 @@ import { ActionSheetController, AlertController, ToastController } from '@ionic/
 export class HomePage {
 
   tasks : any[] = [];
-  searchTerm: string;
-
+  taskPesquisa : any[] = [];
+  nomePesquisa : string;
 
   constructor(private alertCtrl : AlertController, 
     private toastCtrl : ToastController, 
     private actionSheet : ActionSheetController,) {
-    let taskJson = localStorage.getItem("taskDB")
+    let taskJson = localStorage.getItem("taskDB");
+    this.taskPesquisa = this.tasks;
 
     if (taskJson!=null){
       this.tasks = JSON.parse(taskJson);
@@ -49,6 +50,7 @@ export class HomePage {
           handler: (form) => {
             console.log(form.newTask);
             this.add(form.newTask);
+            this.taskPesquisa = this.tasks;
           }
         }
       ]
@@ -123,8 +125,34 @@ export class HomePage {
     this.tasks = this.tasks.filter(taskArray => task != taskArray);
 
     this.updateLocalStorage();
+
+    this.taskPesquisa = this.tasks;
   }
 
+  async ngOnInit(){
+    this.taskPesquisa = this.tasks;
+
+  }
+
+  pesquisa(){
+    console.log(localStorage.getItem("taskDB"));
+    localStorage.getItem("taskDB").includes(this.nomePesquisa);
+    console.log(localStorage.getItem("taskDB").includes(this.nomePesquisa));
+
+    console.log(this.tasks);
+
+    this.taskPesquisa = this.tasks.filter(tasks => {
+      let task : string;
+      let nome = this.nomePesquisa.toLowerCase();
+      task = tasks.name.toLowerCase();
+
+      if(task.includes(nome)){
+        return 1;
+      }
+        })
+
+        console.log(this.tasks);
+  }
   
 
 }

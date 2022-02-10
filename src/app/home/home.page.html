@@ -1,60 +1,48 @@
 <ion-content [fullscreen]="true">
 
-  <ion-header collapse="condense" class = 'content'>
+  <ion-header collapse="condense" class='content'>
     <ion-toolbar>
-      <ion-title class = "animate__animated animate__backInLeft" size="large">your to do list!</ion-title>
+      <ion-title class="animate__animated animate__backInLeft" size="large">your to do list!</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-searchbar></ion-searchbar>
+  <ion-item class = 'searchbar' lines = none>
+    <ion-input placeholder="Pesquisar" [(ngModel)]="nomePesquisa"></ion-input>
 
+    <ion-button (click)="pesquisa()" slot="end" > 
+      <ion-icon name="search-outline"></ion-icon>
+    </ion-button>
+  </ion-item>
 
-  <ion-list class = "animate__animated animate__backInLeft" lines = none>
+  <ion-list class="animate__animated animate__backInLeft" lines=none>
 
-    <ion-item-sliding *ngFor = "let task of tasks">
-      <ion-item (click) = "openActions(task)">
+    <ion-item-sliding *ngFor="let task of taskPesquisa">
+      <ion-item (click)="openActions(task)">
         <ion-label *ngIf="!task.done">{{ task.name }}</ion-label>
         <ion-label *ngIf="task.done"><del>{{ task.name }}</del></ion-label>
 
-        <ion-icon slot="start" name = "radio-button-off" *ngIf="!task.done"></ion-icon>
-        <ion-icon slot="start" name = "checkmark-circle" color = "success" *ngIf="task.done"></ion-icon>
+        <ion-icon slot="start" name="radio-button-off" *ngIf="!task.done"></ion-icon>
+        <ion-icon slot="start" name="checkmark-circle" color="success" *ngIf="task.done"></ion-icon>
       </ion-item>
-      <ion-item-options side = "start">
-        <ion-item-option (click) = "delete(task)">Delete</ion-item-option>
+      <ion-item-options side="start">
+        <ion-item-option (click)="delete(task)">Delete</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
 
   </ion-list>
 
-  <ion-fab vertical = "bottom" horizontal = "end" slot = "fixed">
-    <ion-fab-button (click) = "showAdd()">
-      <ion-icon name = "add-outline"></ion-icon>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="showAdd()">
+      <ion-icon name="add-outline"></ion-icon>
     </ion-fab-button>
 
   </ion-fab>
 
-  <ion-fab vertical = "bottom" horizontal = "start" slot = "fixed">
-    <ion-fab-button (click) = "instructions()">
-      <ion-icon name = "newspaper-outline"></ion-icon>
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="instructions()">
+      <ion-icon name="newspaper-outline"></ion-icon>
     </ion-fab-button>
 
   </ion-fab>
 
 </ion-content>
-
-<script>
-  const searchbar = document.querySelector('ion-searchbar');
-  const items = Array.from(document.querySelector('ion-list').children);
-
-  searchbar.addEventListener('ionInput', handleInput);
-
-  function handleInput(event) {
-    const query = event.target.value.toLowerCase();
-    requestAnimationFrame(() => {
-      items.forEach((item) => {
-        const shouldShow = item.textContent.toLowerCase().indexOf(query) > -1;
-        item.style.display = shouldShow ? 'block' : 'none';
-      });
-    });
-  }
-</script>
