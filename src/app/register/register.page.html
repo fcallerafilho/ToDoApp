@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Cadastre-se</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-list inset>
+    <ion-item>
+      <ion-input placeholder='Email' type="text" [(ngModel)]="user.email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input placeholder='Senha' type="password" [(ngModel)]="user.password"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-button class = 'registerbutton' expand='block' ion-button (click)="register(user)">Cadastrar</ion-button>
+  <ion-button fill = 'clear' expand='block' defaultHref="login" (click) = 'backbutton()'>Voltar</ion-button>
+
+</ion-content>
